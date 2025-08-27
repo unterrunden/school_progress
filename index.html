@@ -189,8 +189,8 @@
 
         document.querySelector('title').textContent = `Schulfortschritt (${currentYear} ${currentQuarter})`;
         document.getElementById('heading').textContent = `Schulfortschritt (${currentYear} ${currentQuarter})`;
-        document.getElementById('progress-bar').style.width = `0%`;
-        document.getElementById('progress-percentage').textContent = `0%`;
+        document.getElementById('progress-bar').style.width = `${percent}%`;
+        document.getElementById('progress-percentage').textContent = `${percent}%`;
         document.getElementById('current-mode').textContent = label;
 
         let totalSecs = 0, doneSecs = 0;
