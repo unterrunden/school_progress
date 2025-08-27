@@ -34,200 +34,200 @@
     </main>
     <script>
         const holidays = [
-        [new Date('2025-10-13'), new Date('2025-10-25')],
-        [new Date('2025-12-22'), new Date('2026-01-06')],
-        [new Date('2026-03-30'), new Date('2026-04-11')],
-        [new Date('2026-05-26'), new Date('2026-05-26')],
-        [new Date('2026-07-20'), new Date('2026-09-01')],
-        [new Date('2026-10-17'), new Date('2026-10-31')],
-        [new Date('2026-12-23'), new Date('2027-01-06')],
-        [new Date('2027-03-22'), new Date('2027-04-03')],
-        [new Date('2027-05-18'), new Date('2027-05-18')]
+          [new Date('2025-10-13'), new Date('2025-10-25')],
+          [new Date('2025-12-22'), new Date('2026-01-06')],
+          [new Date('2026-03-30'), new Date('2026-04-11')],
+          [new Date('2026-05-26'), new Date('2026-05-26')],
+          [new Date('2026-07-20'), new Date('2026-09-01')],
+          [new Date('2026-10-17'), new Date('2026-10-31')],
+          [new Date('2026-12-23'), new Date('2027-01-06')],
+          [new Date('2027-03-22'), new Date('2027-04-03')],
+          [new Date('2027-05-18'), new Date('2027-05-18')]
         ];
 
         const periods = {
-        abitur: [
-            new Date('2025-08-27T08:00:00+02:00'),
-            new Date('2027-07-16T13:00:00+01:00'),
-        ],
-        year: [
-            new Date('2025-08-27T08:00:00+02:00'),
-            new Date('2026-07-19T16:00:00+02:00'),
-        ],
-        semester: [
-            [
-            new Date('2025-08-27T08:00:00+02:00'),
-            new Date('2026-01-06T16:00:00+01:00')
-            ],
-            [
-            new Date('2026-01-07T08:00:00+01:00'),
-            new Date('2026-07-19T16:00:00+02:00')
-            ]
-        ],
-        quarter: [
-            [
-            new Date('2025-08-27T08:00:00+02:00'),
-            new Date('2025-10-12T16:00:00+02:00')
-            ],
-            [
-            new Date('2025-10-26T08:00:00+01:00'),
-            new Date('2025-12-21T16:00:00+01:00')
-            ],
-            [
-            new Date('2026-01-07T08:00:00+01:00'),
-            new Date('2026-03-29T16:00:00+02:00')
-            ],
-            [
-            new Date('2026-04-12T08:00:00+02:00'),
-            new Date('2026-07-19T16:00:00+02:00')
-            ]
-        ]
+          abitur: [
+              new Date('2025-08-27T08:00:00+02:00'),
+              new Date('2027-07-16T13:00:00+01:00'),
+          ],
+          year: [
+              new Date('2025-08-27T08:00:00+02:00'),
+              new Date('2026-07-19T16:00:00+02:00'),
+          ],
+          semester: [
+              [
+              new Date('2025-08-27T08:00:00+02:00'),
+              new Date('2026-01-06T16:00:00+01:00')
+              ],
+              [
+              new Date('2026-01-07T08:00:00+01:00'),
+              new Date('2026-07-19T16:00:00+02:00')
+              ]
+          ],
+          quarter: [
+              [
+              new Date('2025-08-27T08:00:00+02:00'),
+              new Date('2025-10-12T16:00:00+02:00')
+              ],
+              [
+              new Date('2025-10-26T08:00:00+01:00'),
+              new Date('2025-12-21T16:00:00+01:00')
+              ],
+              [
+              new Date('2026-01-07T08:00:00+01:00'),
+              new Date('2026-03-29T16:00:00+02:00')
+              ],
+              [
+              new Date('2026-04-12T08:00:00+02:00'),
+              new Date('2026-07-19T16:00:00+02:00')
+              ]
+          ]
         };
 
         const labels = {
-        abitur: 'Zeitraum: bis zum Abitur',
-        year: 'Zeitraum: bis zum Ende des Schuljahres',
-        semester: 'Zeitraum: bis zum Ende des Halbjahres',
-        quarter: 'Zeitraum: bis zum Ende des Quartals'
+          abitur: 'Zeitraum: bis zum Abitur',
+          year: 'Zeitraum: bis zum Ende des Schuljahres',
+          semester: 'Zeitraum: bis zum Ende des Halbjahres',
+          quarter: 'Zeitraum: bis zum Ende des Quartals'
         };
 
         let currentMode = 'abitur'; let showTotalTime = false; let currentYear = "Q1"; let currentQuarter = 1;
 
         function isSchoolDay(day) {
-        const weekday = day.getDay();
-        if (weekday === 0 || weekday === 6) return false;
-        if (isHoliday(day)) return false;
-        return true;
+          const weekday = day.getDay();
+          if (weekday === 0 || weekday === 6) return false;
+          if (isHoliday(day)) return false;
+          return true;
         }
 
         function isHoliday(date) {
-        for (const [start, end] of holidays) {
-            if (date >= start && date <= end) return true;
-        }
-        return false;
+          for (const [start, end] of holidays) {
+              if (date >= start && date <= end) return true;
+          }
+          return false;
         }
 
         function getCurrentPeriodIndex(mode, now) {
-        const arr = periods[mode];
-        if (!Array.isArray(arr[0])) return 0;
-        for (let i = 0; i < arr.length; i++) {
-            if (now >= arr[i][0] && now <= arr[i][1]) return i;
-            if (now < arr[i][0]) return i;
-        }
-        return arr.length - 1;
+          const arr = periods[mode];
+          if (!Array.isArray(arr[0])) return 0;
+          for (let i = 0; i < arr.length; i++) {
+              if (now >= arr[i][0] && now <= arr[i][1]) return i;
+              if (now < arr[i][0]) return i;
+          }
+          return arr.length - 1;
         }
 
         function getActivePeriod(mode, now) {
-        if (mode === 'abitur' || mode === 'year') {
-            return [...periods[mode], labels[mode]];
-        } else {
-            const i = getCurrentPeriodIndex(mode, now);
-            const arr = periods[mode][i];
-            return [arr[0], arr[1], labels[mode] + ` (${i + 1}/${periods[mode].length})`];
-        }
+          if (mode === 'abitur' || mode === 'year') {
+              return [...periods[mode], labels[mode]];
+          } else {
+              const i = getCurrentPeriodIndex(mode, now);
+              const arr = periods[mode][i];
+              return [arr[0], arr[1], labels[mode] + ` (${i + 1}/${periods[mode].length})`];
+          }
         }
 
         function getSchoolProgress(now, start, end) {
-        if (now <= start) return 0;
-        if (now >= end) return 1;
-        let total = 0, done = 0;
-        let d1 = new Date(start), d2 = new Date(end);
-
-        for (let day = new Date(d1); day <= d2; day.setDate(day.getDate() + 1)) {
-            if (!isSchoolDay(day)) continue;
-            const s = new Date(day); s.setHours(0, 0, 0, 0);
-            const e = new Date(day); e.setHours(23, 59, 59, 999);
-            const dayMs = e - s + 1;
-            total += dayMs / 1000;
-            if (now > e) {
-            done += dayMs / 1000;
-            } else if (now > s && now <= e) {
-            done += (now - s) / 1000;
-            }
-        }
-        return done / total;
+          if (now <= start) return 0;
+          if (now >= end) return 1;
+          let total = 0, done = 0;
+          let d1 = new Date(start), d2 = new Date(end);
+  
+          for (let day = new Date(d1); day <= d2; day.setDate(day.getDate() + 1)) {
+              if (!isSchoolDay(day)) continue;
+              const s = new Date(day); s.setHours(0, 0, 0, 0);
+              const e = new Date(day); e.setHours(23, 59, 59, 999);
+              const dayMs = e - s + 1;
+              total += dayMs / 1000;
+              if (now > e) {
+                done += dayMs / 1000;
+              } else if (now > s && now <= e) {
+                done += (now - s) / 1000;
+              }
+          }
+          return done / total;
         }
 
         function getTotalTimeAllDays(start, end) {
-        return (end - start) / 1000;
+          return (end - start) / 1000;
         }
 
         function formatDuration(secs) {
-        if (secs < 0) secs = 0;
-        const days = Math.floor(secs / (24 * 3600));
-        const hours = Math.floor((secs % (24 * 3600)) / 3600);
-        const minutes = Math.floor((secs % 3600) / 60);
-        return `${days}d ${hours}h ${minutes}m`;
+          if (secs < 0) secs = 0;
+          const days = Math.floor(secs / (24 * 3600));
+          const hours = Math.floor((secs % (24 * 3600)) / 3600);
+          const minutes = Math.floor((secs % 3600) / 60);
+          return `${days}d ${hours}h ${minutes}m`;
         }
 
         function formatDynamicPercentage(value, decimals = 2) {
-        const percentValue = value * 100;
-
-        if (Number.isInteger(percentValue)) {
-            return `${percentValue}%`;
-        } else {
-            return `${percentValue.toFixed(decimals)}%`;
-        }
+          const percentValue = value * 100;
+  
+          if (Number.isInteger(percentValue)) {
+              return `${percentValue}%`;
+          } else {
+              return `${percentValue.toFixed(decimals)}%`;
+          }
         }
 
         function update() {
-        const now = new Date();
-        const [start, end, label] = getActivePeriod(currentMode, now);
+          const now = new Date();
+          const [start, end, label] = getActivePeriod(currentMode, now);
+  
+          let prog = getSchoolProgress(now, start, end);
+          prog = Math.max(0, Math.min(1, prog));
+          let percent = 0;
+          if (currentMode === 'abitur') {
+              percent = formatDynamicPercentage(prog, 4);
+          } else if (currentMode === 'year') {
+              percent = formatDynamicPercentage(prog, 3);
+          } else if (currentMode === 'semester') {
+              percent = formatDynamicPercentage(prog, 2);
+          } else if (currentMode === 'quarter') {
+              percent = formatDynamicPercentage(prog, 2);
+          }
 
-        let prog = getSchoolProgress(now, start, end);
-        prog = Math.max(0, Math.min(1, prog));
-        let percent = 0;
-        if (currentMode === 'abitur') {
-            percent = formatDynamicPercentage(prog, 4);
-        } else if (currentMode === 'year') {
-            percent = formatDynamicPercentage(prog, 3);
-        } else if (currentMode === 'semester') {
-            percent = formatDynamicPercentage(prog, 2);
-        } else if (currentMode === 'quarter') {
-            percent = formatDynamicPercentage(prog, 2);
-        }
+          document.querySelector('title').textContent = `Schulfortschritt (${currentYear} ${currentQuarter})`;
+          document.getElementById('heading').textContent = `Schulfortschritt (${currentYear} ${currentQuarter})`;
+          document.getElementById('progress-bar').style.width = `${percent}%`;
+          document.getElementById('progress-percentage').textContent = `${percent}%`;
+          document.getElementById('current-mode').textContent = label;
 
-        document.querySelector('title').textContent = `Schulfortschritt (${currentYear} ${currentQuarter})`;
-        document.getElementById('heading').textContent = `Schulfortschritt (${currentYear} ${currentQuarter})`;
-        document.getElementById('progress-bar').style.width = `${percent}%`;
-        document.getElementById('progress-percentage').textContent = `${percent}%`;
-        document.getElementById('current-mode').textContent = label;
+          let totalSecs = 0, doneSecs = 0;
+          let d1 = new Date(start), d2 = new Date(end);
+          for (let day = new Date(d1); day <= d2; day.setDate(day.getDate() + 1)) {
+              if (!isSchoolDay(day)) continue;
+              const s = new Date(day); s.setHours(0, 0, 0, 0);
+              const e = new Date(day); e.setHours(23, 59, 59, 999);
+              const daySecs = (e - s + 1) / 1000;
+              totalSecs += daySecs;
+              if (now > e) {
+              doneSecs += daySecs;
+              } else if (now > s && now <= e) {
+              doneSecs += (now - s) / 1000;
+              }
+          }
+          const remainingSecs = totalSecs - doneSecs;
 
-        let totalSecs = 0, doneSecs = 0;
-        let d1 = new Date(start), d2 = new Date(end);
-        for (let day = new Date(d1); day <= d2; day.setDate(day.getDate() + 1)) {
-            if (!isSchoolDay(day)) continue;
-            const s = new Date(day); s.setHours(0, 0, 0, 0);
-            const e = new Date(day); e.setHours(23, 59, 59, 999);
-            const daySecs = (e - s + 1) / 1000;
-            totalSecs += daySecs;
-            if (now > e) {
-            doneSecs += daySecs;
-            } else if (now > s && now <= e) {
-            doneSecs += (now - s) / 1000;
-            }
-        }
-        const remainingSecs = totalSecs - doneSecs;
-
-        if (showTotalTime) {
-            const totalSecsTotal = getTotalTimeAllDays(start, end);
-            let doneSecsTotal = Math.max(0, Math.min((now - start) / 1000, totalSecsTotal));    
-            const remainingSecsTotal = totalSecsTotal - doneSecsTotal;
-            document.getElementById('time-remaining').textContent = `${formatDuration(remainingSecs)} | ${formatDuration(remainingSecsTotal)}`;
-        } else {
-            document.getElementById('time-remaining').textContent = formatDuration(remainingSecs);
-        }
-
-        if (prog >= 1 && (currentMode === 'quarter' || currentMode === 'semester' || currentMode === 'year')) {
-            let idx = getCurrentPeriodIndex(currentMode, now);
-            if (Array.isArray(periods[currentMode][0]) && idx < periods[currentMode].length - 1) {
-            currentMode = currentMode;
-            }
-        }
+          if (showTotalTime) {
+              const totalSecsTotal = getTotalTimeAllDays(start, end);
+              let doneSecsTotal = Math.max(0, Math.min((now - start) / 1000, totalSecsTotal));    
+              const remainingSecsTotal = totalSecsTotal - doneSecsTotal;
+              document.getElementById('time-remaining').textContent = `${formatDuration(remainingSecs)} | ${formatDuration(remainingSecsTotal)}`;
+          } else {
+              document.getElementById('time-remaining').textContent = formatDuration(remainingSecs);
+          }
+  
+          if (prog >= 1 && (currentMode === 'quarter' || currentMode === 'semester' || currentMode === 'year')) {
+              let idx = getCurrentPeriodIndex(currentMode, now);
+              if (Array.isArray(periods[currentMode][0]) && idx < periods[currentMode].length - 1) {
+                currentMode = currentMode;
+              }
+          }
         }
 
         document.querySelectorAll('.btn-mode').forEach(btn => {
-        btn.addEventListener('click', e => {
+          btn.addEventListener('click', e => {
             currentMode = btn.dataset.mode;
             update();
         });
